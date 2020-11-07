@@ -14,6 +14,7 @@ public class NameInput : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.DeleteAll();
         SetupInputField();
     }
 

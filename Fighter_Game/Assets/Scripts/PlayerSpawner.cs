@@ -5,12 +5,23 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject playerPrefab = null;
+    public GameObject[] characterPrefabs;
+    public Transform[] spawnPoints;
+
 
     void Start()
     {
-        PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
+        int selectedCharacter = PlayerPrefs.GetInt("SelectedCharacter");
+        GameObject prefab = characterPrefabs[selectedCharacter];
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate(prefab.name, spawnPoints[0].position, Quaternion.identity, 0);
+        }
+        else
+        {
+            PhotonNetwork.Instantiate(prefab.name, spawnPoints[1].position, Quaternion.identity, 0);
+        }
     }
     
 }

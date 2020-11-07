@@ -10,6 +10,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject findOpponentPanel = null;
     [SerializeField] private GameObject waitingStatusPanel = null;
     [SerializeField] private Text waitingStatusText = null;
+    [SerializeField] private Text playerCountsText = null;
 
     private bool isConnecting = false;
     private const int MaxPlayerPerRoom = 2;
@@ -27,6 +28,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         waitingStatusPanel.SetActive(true);
 
         waitingStatusText.text = "Searching...";
+        playerCountsText.text = PhotonNetwork.PlayerList.Length + " Player(s) Connected.";
 
         if (PhotonNetwork.IsConnected)
         {
@@ -72,11 +74,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (playerCount != MaxPlayerPerRoom)
         {
             waitingStatusText.text = "Waiting for opponent";
+            playerCountsText.text = PhotonNetwork.PlayerList.Length + " Player(s) Connected.";
             Debug.Log("Client is waiting for an opponent");
         }
         else
         {
             waitingStatusText.text = "Opponent Found";
+            playerCountsText.text = PhotonNetwork.PlayerList.Length + " Player(s) Connected.";
             Debug.Log("Matching is ready to begin");
         }
     }
@@ -90,7 +94,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             waitingStatusText.text = "Opponent Found";
             Debug.Log("Matching is ready to begin");
 
-            PhotonNetwork.LoadLevel("Game");
+            //yield return new WaitForSeconds(5);
+            PhotonNetwork.LoadLevel("CharacterSelectionMenu");
         }
     }
 }
