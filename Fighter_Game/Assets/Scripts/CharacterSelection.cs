@@ -22,27 +22,45 @@ public class CharacterSelection : MonoBehaviour
     {
         characters[0].SetActive(true);
         characterName.text = characters[0].name;
-        
+
         playerCustomProperties["PlayerReady"] = playerReady;
-        PhotonNetwork.PlayerList[0].CustomProperties = playerCustomProperties;
-        PhotonNetwork.PlayerList[1].CustomProperties = playerCustomProperties;
+        //PhotonNetwork.LocalPlayer.SetCustomProperties(playerCustomProperties);
+        //PhotonNetwork.MasterClient.SetCustomProperties(playerCustomProperties);
+
+        //playerName.text = PhotonNetwork.LocalPlayer.NickName;
+        //playerName2.text = PhotonNetwork.MasterClient.NickName;
+
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (player.IsMasterClient && player.IsLocal)
+            {
+                player.SetCustomProperties(playerCustomProperties);
+                playerName2.text = player.NickName;
+
+            }
+            else
+            {
+                player.SetCustomProperties(playerCustomProperties);
+                playerName.text = player.NickName;
+            }
+        }
 
         //masterPlayerReadyText.text = "Ready: " + (bool)playerCustomProperties["PlayerReady"];
     }
 
     public void Update()
     {
-        playerName.text = PhotonNetwork.PlayerList[0].NickName;
-        if (PhotonNetwork.PlayerList[0].CustomProperties.ContainsKey("PlayerReady"))
-        {
-            masterPlayerReadyText.text = "Ready: " + (bool)PhotonNetwork.PlayerList[0].CustomProperties["PlayerReady"];
-        }
+        StartCoroutine(SetCP());
+        StartCoroutine(ShowCP());
 
-        playerName2.text = PhotonNetwork.PlayerList[1].NickName;
-        if (PhotonNetwork.PlayerList[1].CustomProperties.ContainsKey("PlayerReady"))
-        {
-            LocalPlayerReadyText.text = "Ready: " + (bool)PhotonNetwork.PlayerList[1].CustomProperties["PlayerReady"];
-        }
+        //if (PhotonNetwork.PlayerList[0].CustomProperties.ContainsKey("PlayerReady"))
+        //{
+        //    masterPlayerReadyText.text = "Ready: " + (bool)PhotonNetwork.PlayerList[0].CustomProperties["PlayerReady"];
+        //}
+        //else if (PhotonNetwork.PlayerList[1].CustomProperties.ContainsKey("PlayerReady"))
+        //{
+        //    LocalPlayerReadyText.text = "Ready: " + (bool)PhotonNetwork.PlayerList[1].CustomProperties["PlayerReady"];
+        //}
         
         
     }
@@ -74,15 +92,36 @@ public class CharacterSelection : MonoBehaviour
         PlayerPrefs.SetInt("SelectedCharacter", selectedCharacter);
         playerReady = true ;
         playerCustomProperties["PlayerReady"] = playerReady;
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (player.IsMasterClient && player.IsLocal)
+            {
+                player.CustomProperties = playerCustomProperties;
+                Debug.Log("MasterClient clicked");
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.MasterClient.CustomProperties = playerCustomProperties;
+            }
+            else
+            {
+                player.CustomProperties = playerCustomProperties;
+                Debug.Log("LocalPlayer ready clicked");
+
+            }
+
         }
-        else
-        {
-            PhotonNetwork.LocalPlayer.CustomProperties = playerCustomProperties;
-        }
+
+
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    PhotonNetwork.MasterClient.CustomProperties = playerCustomProperties;
+        //    Debug.Log("MasterClient clicked");
+
+        //}
+        //else
+        //{
+        //    PhotonNetwork.LocalPlayer.CustomProperties = playerCustomProperties;
+        //    Debug.Log("LocalPlayer ready clicked");
+
+        //}
 
         //if (AllPlayersReady())
         //{
@@ -112,5 +151,96 @@ public class CharacterSelection : MonoBehaviour
 
        return true;
     }
-    
+
+    private IEnumerator SetCP()
+    {
+        while (PhotonNetwork.IsConnected)
+        {
+            //if (PhotonNetwork.IsMasterClient)
+            //{
+            //    playerCustomProperties["PlayerReady"] = playerReady;
+            //    PhotonNetwork.MasterClient.SetCustomProperties(playerCustomProperties);
+            //}
+            //else
+            //{
+            //    playerCustomProperties["PlayerReady"] = playerReady;
+            //    PhotonNetwork.LocalPlayer.SetCustomProperties(playerCustomProperties);
+            //}
+
+            foreach (var player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsMasterClient && player.IsLocal)
+                {
+
+                    playerCustomProperties["PlayerReady"] = playerReady;
+                    player.SetCustomProperties(playerCustomProperties);
+
+                }
+                else
+                {
+                    playerCustomProperties["PlayerReady"] = playerReady;
+                    player.SetCustomProperties(playerCustomProperties);
+                }
+            }
+
+            //playerCustomProperties["PlayerReady"] = playerReady;
+            //PhotonNetwork.LocalPlayer.SetCustomProperties(playerCustomProperties);
+
+            yield return new WaitForSeconds(2f);
+        }
+
+        yield break;
+    }
+
+    private IEnumerator ShowCP()
+    {
+        while (PhotonNetwork.IsConnected)
+        {
+            bool ready = false;
+
+            //if (PhotonNetwork.IsMasterClient)
+            //{
+            //    ready = (bool)PhotonNetwork.MasterClient.CustomProperties["PlayerReady"];
+            //    masterPlayerReadyText.text = "Ready: " + ready;
+            //    Debug.Log("MasterClient ready: " + ready);
+
+            //}
+            //else
+            //{
+            //    if (PhotonNetwork.LocalPlayer == null)
+            //    {
+            //        Debug.Log("LocalPlayer is missing.");
+            //    }
+            //    ready = (bool)PhotonNetwork.LocalPlayer.CustomProperties["PlayerReady"];
+            //    LocalPlayerReadyText.text = "Ready: " + ready;
+
+            //    Debug.Log("LocalPlayer ready: " + ready);
+            //}
+
+
+            foreach (var player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsMasterClient && player.IsLocal)
+                {
+                    ready = (bool)player.CustomProperties["PlayerReady"];
+                    masterPlayerReadyText.text = "Ready: " + ready;
+                    Debug.Log("MasterClient ready: " + ready);
+
+                }
+                else
+                {
+                    ready = (bool)player.CustomProperties["PlayerReady"];
+                    LocalPlayerReadyText.text = "Ready: " + ready;
+                    Debug.Log("LocalPlayer ready: " + ready);
+                }
+            }
+
+            //bool ready = (bool)PhotonNetwork.LocalPlayer.CustomProperties["PlayerReady"];
+            //Debug.Log("Player ready: " + ready);
+
+            yield return new WaitForSeconds(4f);
+        }
+
+        yield break;
+    }
 }

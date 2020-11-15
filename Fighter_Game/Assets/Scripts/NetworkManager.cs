@@ -12,8 +12,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private Text waitingStatusText = null;
     [SerializeField] private Text playerCountsText = null;
 
+    private AppSettings version = new AppSettings()
+    {
+        AppVersion = "1.0",
+        AppIdRealtime = "f0ca9ec0-ac45-41ad-9255-55421b492c7b"
+    };
+
     private bool isConnecting = false;
     private const int MaxPlayerPerRoom = 2;
+
+    private ExitGames.Client.Photon.Hashtable playerCustomProperties = new ExitGames.Client.Photon.Hashtable();
 
     private void Awake()
     {
@@ -32,11 +40,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsConnected)
         {
+            playerCountsText.text = PhotonNetwork.PlayerList.Length + " Player(s) Connected.";
             PhotonNetwork.JoinRandomRoom();
         }
         else
         {
-            PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.ConnectUsingSettings(version);
         }
     }
 
@@ -48,6 +57,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.JoinRandomRoom();
         }
+
+        //StartCoroutine(SetCP());
+        //StartCoroutine(ShowCP());
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -93,9 +105,33 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
             waitingStatusText.text = "Opponent Found";
             Debug.Log("Matching is ready to begin");
-
-            //yield return new WaitForSeconds(5);
+            
             PhotonNetwork.LoadLevel("CharacterSelectionMenu");
         }
+    }
+
+    private IEnumerator SetCP()
+    {
+        while(PhotonNetwork.IsConnected)
+        {
+            playerCustomProperties["PlayerReady"] = false;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(playerCustomProperties);
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        yield break;
+    }
+
+    private IEnumerator ShowCP()
+    {
+        while (PhotonNetwork.IsConnected)
+        {
+            bool ready = (bool)PhotonNetwork.LocalPlayer.CustomProperties["PlayerReady"];
+            Debug.Log("Player ready: " + ready);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        yield break;
     }
 }

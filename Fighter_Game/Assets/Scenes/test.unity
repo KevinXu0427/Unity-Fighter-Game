@@ -159,7 +159,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -200,7 +200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149545771}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.64, z: -6.43}
+  m_LocalPosition: {x: -0.17, y: 1.39, z: -3.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -216,6 +216,10 @@ PrefabInstance:
     - target: {fileID: 134532151261398858, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
       propertyPath: m_Name
       value: Oden test
+      objectReference: {fileID: 0}
+    - target: {fileID: 134532151261398858, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 762837781918408176, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -235,7 +239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 762837781918408176, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9848078
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 762837781918408176, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
       propertyPath: m_LocalRotation.z
@@ -243,11 +247,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 762837781918408176, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.17364825
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 762837781918408176, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 762837781918408176, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -255,14 +259,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 762837781918408176, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 160
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 762837781918408176, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 944803291931171762, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
+      propertyPath: maxComboDelay
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
+--- !u!1 &1136818196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1136818197}
+  m_Layer: 0
+  m_Name: EnergyBallSpwan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1136818197
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136818196}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.751, y: 1.14, z: 0.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2008661365}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1513078080
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +391,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1643714829
 GameObject:
@@ -449,5 +487,29 @@ Transform:
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2008661362 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 134532151261398858, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
+  m_PrefabInstance: {fileID: 205854808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2008661365 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 762837781918408176, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
+  m_PrefabInstance: {fileID: 205854808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2008661366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008661362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77203a7d70c4d5943aa5e1dd3353e6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 4404605441288029909, guid: 1c03533db84fda9419d75ad6c3c00f41, type: 3}
+  Spwaner: {fileID: 1136818196}
