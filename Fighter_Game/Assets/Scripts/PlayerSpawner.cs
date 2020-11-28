@@ -14,14 +14,16 @@ public class PlayerSpawner : MonoBehaviour
         int selectedCharacter = PlayerPrefs.GetInt("SelectedCharacter");
         GameObject prefab = characterPrefabs[selectedCharacter];
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.Instantiate(prefab.name, spawnPoints[0].position, Quaternion.identity, 0);
-        }
-        else
-        {
-            PhotonNetwork.Instantiate(prefab.name, spawnPoints[1].position, Quaternion.identity, 0);
-        }
+        PhotonNetwork.Instantiate(prefab.name,Vector3.zero, Quaternion.identity, 0);
+
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    PhotonNetwork.Instantiate(prefab.name, spawnPoints[0].position, Quaternion.identity, 0);
+        //}
+        //else
+        //{
+        //    PhotonNetwork.Instantiate(prefab.name, spawnPoints[1].position, Quaternion.identity, 0);
+        //}
     }
     
 }

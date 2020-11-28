@@ -10,59 +10,30 @@ public class CharacterSelection : MonoBehaviour
     public GameObject[] characters;
     public int selectedCharacter = 0;
     public Text characterName;
-    public Text playerName;
-    public Text playerName2;
-    public Text masterPlayerReadyText;
-    public Text LocalPlayerReadyText;
 
-    private ExitGames.Client.Photon.Hashtable playerCustomProperties = new ExitGames.Client.Photon.Hashtable();
-    private bool playerReady = false;
+    public PhotonView PV;
+    
+    public bool masterPlayerReady = false;
+    public bool localPlayerReady = false;
+    public bool loadedScene = false;
 
-    public void Start()
+    public void Awake()
     {
+        PV = GetComponent<PhotonView>();
+        
         characters[0].SetActive(true);
         characterName.text = characters[0].name;
 
-        playerCustomProperties["PlayerReady"] = playerReady;
-        //PhotonNetwork.LocalPlayer.SetCustomProperties(playerCustomProperties);
-        //PhotonNetwork.MasterClient.SetCustomProperties(playerCustomProperties);
-
-        //playerName.text = PhotonNetwork.LocalPlayer.NickName;
-        //playerName2.text = PhotonNetwork.MasterClient.NickName;
-
-        foreach (var player in PhotonNetwork.PlayerList)
-        {
-            if (player.IsMasterClient && player.IsLocal)
-            {
-                player.SetCustomProperties(playerCustomProperties);
-                playerName2.text = player.NickName;
-
-            }
-            else
-            {
-                player.SetCustomProperties(playerCustomProperties);
-                playerName.text = player.NickName;
-            }
-        }
-
-        //masterPlayerReadyText.text = "Ready: " + (bool)playerCustomProperties["PlayerReady"];
+        localPlayerReady = false;
+        masterPlayerReady = false;
     }
 
     public void Update()
     {
-        StartCoroutine(SetCP());
-        StartCoroutine(ShowCP());
-
-        //if (PhotonNetwork.PlayerList[0].CustomProperties.ContainsKey("PlayerReady"))
-        //{
-        //    masterPlayerReadyText.text = "Ready: " + (bool)PhotonNetwork.PlayerList[0].CustomProperties["PlayerReady"];
-        //}
-        //else if (PhotonNetwork.PlayerList[1].CustomProperties.ContainsKey("PlayerReady"))
-        //{
-        //    LocalPlayerReadyText.text = "Ready: " + (bool)PhotonNetwork.PlayerList[1].CustomProperties["PlayerReady"];
-        //}
-        
-        
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Check();
+        }
     }
 
     public void NextCharacter()
@@ -90,157 +61,44 @@ public class CharacterSelection : MonoBehaviour
     {
         Debug.Log(PhotonNetwork.LocalPlayer.NickName);
         PlayerPrefs.SetInt("SelectedCharacter", selectedCharacter);
-        playerReady = true ;
-        playerCustomProperties["PlayerReady"] = playerReady;
-        foreach (var player in PhotonNetwork.PlayerList)
+
+        if (!PV.IsMine)
         {
-            if (player.IsMasterClient && player.IsLocal)
-            {
-                player.CustomProperties = playerCustomProperties;
-                Debug.Log("MasterClient clicked");
+            localPlayerReady = true;
 
-            }
-            else
-            {
-                player.CustomProperties = playerCustomProperties;
-                Debug.Log("LocalPlayer ready clicked");
-
-            }
-
+            PV.RPC("RPC_PlayerReadyCheck", RpcTarget.AllBuffered, true);
         }
-
-
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    PhotonNetwork.MasterClient.CustomProperties = playerCustomProperties;
-        //    Debug.Log("MasterClient clicked");
-
-        //}
-        //else
-        //{
-        //    PhotonNetwork.LocalPlayer.CustomProperties = playerCustomProperties;
-        //    Debug.Log("LocalPlayer ready clicked");
-
-        //}
-
-        //if (AllPlayersReady())
-        //{
-        //    playerName.text = "All Ready";
-        //}
-
-    }
-
-    private bool AllPlayersReady()
-    {
-
-       foreach (var photonPlayer in PhotonNetwork.PlayerList)
-       {
-            if (photonPlayer.CustomProperties.ContainsKey("PlayerReady"))
-            {
-                bool temp = (bool)photonPlayer.CustomProperties["PlayerReady"];
-                if (!temp)
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-       return true;
-    }
-
-    private IEnumerator SetCP()
-    {
-        while (PhotonNetwork.IsConnected)
+        else
         {
-            //if (PhotonNetwork.IsMasterClient)
-            //{
-            //    playerCustomProperties["PlayerReady"] = playerReady;
-            //    PhotonNetwork.MasterClient.SetCustomProperties(playerCustomProperties);
-            //}
-            //else
-            //{
-            //    playerCustomProperties["PlayerReady"] = playerReady;
-            //    PhotonNetwork.LocalPlayer.SetCustomProperties(playerCustomProperties);
-            //}
-
-            foreach (var player in PhotonNetwork.PlayerList)
-            {
-                if (player.IsMasterClient && player.IsLocal)
-                {
-
-                    playerCustomProperties["PlayerReady"] = playerReady;
-                    player.SetCustomProperties(playerCustomProperties);
-
-                }
-                else
-                {
-                    playerCustomProperties["PlayerReady"] = playerReady;
-                    player.SetCustomProperties(playerCustomProperties);
-                }
-            }
-
-            //playerCustomProperties["PlayerReady"] = playerReady;
-            //PhotonNetwork.LocalPlayer.SetCustomProperties(playerCustomProperties);
-
-            yield return new WaitForSeconds(2f);
+            masterPlayerReady = true;
         }
-
-        yield break;
     }
 
-    private IEnumerator ShowCP()
+    void Check()
     {
-        while (PhotonNetwork.IsConnected)
+        if (localPlayerReady == true && masterPlayerReady == true && loadedScene == false)
         {
-            bool ready = false;
+            loadedScene = true;
 
-            //if (PhotonNetwork.IsMasterClient)
-            //{
-            //    ready = (bool)PhotonNetwork.MasterClient.CustomProperties["PlayerReady"];
-            //    masterPlayerReadyText.text = "Ready: " + ready;
-            //    Debug.Log("MasterClient ready: " + ready);
-
-            //}
-            //else
-            //{
-            //    if (PhotonNetwork.LocalPlayer == null)
-            //    {
-            //        Debug.Log("LocalPlayer is missing.");
-            //    }
-            //    ready = (bool)PhotonNetwork.LocalPlayer.CustomProperties["PlayerReady"];
-            //    LocalPlayerReadyText.text = "Ready: " + ready;
-
-            //    Debug.Log("LocalPlayer ready: " + ready);
-            //}
-
-
-            foreach (var player in PhotonNetwork.PlayerList)
-            {
-                if (player.IsMasterClient && player.IsLocal)
-                {
-                    ready = (bool)player.CustomProperties["PlayerReady"];
-                    masterPlayerReadyText.text = "Ready: " + ready;
-                    Debug.Log("MasterClient ready: " + ready);
-
-                }
-                else
-                {
-                    ready = (bool)player.CustomProperties["PlayerReady"];
-                    LocalPlayerReadyText.text = "Ready: " + ready;
-                    Debug.Log("LocalPlayer ready: " + ready);
-                }
-            }
-
-            //bool ready = (bool)PhotonNetwork.LocalPlayer.CustomProperties["PlayerReady"];
-            //Debug.Log("Player ready: " + ready);
-
-            yield return new WaitForSeconds(4f);
+            //PV.RPC("LoadGameScene", RpcTarget.AllBuffered);
+            bool temp = PhotonNetwork.AutomaticallySyncScene;
+            PhotonNetwork.LoadLevel(2);
         }
-
-        yield break;
     }
+
+
+    [PunRPC]
+    void RPC_PlayerReadyCheck(bool value)
+    {
+        localPlayerReady = value;
+    }
+
+    //[PunRPC]
+    //void LoadGameScene()
+    //{
+    //    PhotonNetwork.LoadLevel("Game");
+    //}
+
+
 }
+

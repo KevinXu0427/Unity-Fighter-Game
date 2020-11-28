@@ -266,8 +266,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterPrefabs:
-  - {fileID: 919132149155446097, guid: 704d5f4d19ed43f4fbfa8a52f4aed6d3, type: 3}
-  - {fileID: 919132149155446097, guid: def5c2fab81534446a94e3f3e5ced2a1, type: 3}
+  - {fileID: 134532151261398858, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
+  - {fileID: 8351838365326114492, guid: c9f133bf46b7f1b42b02265de34dede6, type: 3}
   spawnPoints:
   - {fileID: 94950703}
   - {fileID: 436647578}

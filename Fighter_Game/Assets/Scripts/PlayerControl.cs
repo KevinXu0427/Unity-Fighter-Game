@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviourPun
 {
     static Animator anim;
     private float movementSpeed = 1.0f;
@@ -18,10 +19,21 @@ public class PlayerControl : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         energyBall = GetComponent<ProjectileController>();
+
+        
     }
 
     // Update is called once per frame
     void Update()
+    {
+        if (photonView.IsMine)
+        {
+            TakeInput();
+        }
+        
+    }
+
+    void TakeInput()
     {
         if (Input.GetKeyDown(KeyCode.J) && comboNum < 3)
         {
@@ -49,7 +61,7 @@ public class PlayerControl : MonoBehaviour
 
         }
 
-        
+
 
 
         // Move Left/Right
@@ -96,6 +108,5 @@ public class PlayerControl : MonoBehaviour
             anim.SetTrigger("Energy Ball Attack");
             StartCoroutine(energyBall.ShootEnergyBall());
         }
-
     }
 }

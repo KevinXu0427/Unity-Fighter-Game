@@ -18,11 +18,10 @@ public class Movement : MonoBehaviourPun
 
     void Update()
     {
-        //if (photonView.IsMine)
-        //{
-        //    TakeInput();
-        //}
-        TakeInput();
+        if (photonView.IsMine)
+        {
+            TakeInput();
+        }
 
     }
 

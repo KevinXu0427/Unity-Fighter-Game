@@ -42,6 +42,9 @@ GameObject:
   - component: {fileID: 762837781918408176}
   - component: {fileID: 6662521766507939722}
   - component: {fileID: 944803291931171762}
+  - component: {fileID: 4735629074326805753}
+  - component: {fileID: 6002341751276573650}
+  - component: {fileID: 6749924709654481526}
   m_Layer: 0
   m_Name: Oden Prefabs
   m_TagString: Untagged
@@ -96,6 +99,96 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d331106ab98b284facc0ca72ae6a085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  comboNum: 0
+  reset: 0
+  resetTime: 0
+--- !u!114 &4735629074326805753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134532151261398858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 0
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 6002341751276573650}
+  - {fileID: 6749924709654481526}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &6002341751276573650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134532151261398858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &6749924709654481526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134532151261398858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 1
+    Name: isJumping
+  - Type: 4
+    SynchronizeType: 1
+    Name: isWalkingForward
+  - Type: 4
+    SynchronizeType: 1
+    Name: isWalkingBackward
+  - Type: 4
+    SynchronizeType: 1
+    Name: isIdle
+  - Type: 9
+    SynchronizeType: 1
+    Name: Punch1
+  - Type: 9
+    SynchronizeType: 1
+    Name: Punch2
+  - Type: 9
+    SynchronizeType: 1
+    Name: Punch3
+  - Type: 9
+    SynchronizeType: 1
+    Name: Reset
+  - Type: 9
+    SynchronizeType: 1
+    Name: Energy Ball Attack
+  - Type: 9
+    SynchronizeType: 1
+    Name: Kick
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &317111269247638629
 GameObject:
   m_ObjectHideFlags: 0
