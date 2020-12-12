@@ -40,6 +40,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - RPC_PlayerReadyCheck
   - LoadGameScene
+  - RPC_TakeDamage
+  - RPC_Instantiate
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -133,6 +133,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks, ILobbyCallbacks
     public void onPlayerNameChanged(string nameIn)
     {
         PhotonNetwork.NickName = nameIn;
+        PlayerPrefs.SetString("PlayerName", nameIn);
     }
 
     public void JointLobbyOnClick()
