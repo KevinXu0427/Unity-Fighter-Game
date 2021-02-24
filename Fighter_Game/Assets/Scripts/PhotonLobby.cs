@@ -17,7 +17,9 @@ public class PhotonLobby : MonoBehaviourPunCallbacks, ILobbyCallbacks
     public Transform playersPanel;
     public GameObject playerListPrefab;
     public GameObject startButton;
-    
+
+    public GameObject titlewindow;
+    public GameObject lobbywindow;
 
     private AppSettings version = new AppSettings()
     {
@@ -29,6 +31,14 @@ public class PhotonLobby : MonoBehaviourPunCallbacks, ILobbyCallbacks
     {
         // Connects to Master photon server.
         PhotonNetwork.ConnectUsingSettings(version);
+        titlewindow.SetActive(true);
+        lobbywindow.SetActive(false);
+    }
+
+    public void titleWindowStart()
+    {
+        titlewindow.SetActive(false);
+        lobbywindow.SetActive(true);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

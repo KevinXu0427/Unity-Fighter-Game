@@ -36,7 +36,7 @@ public class PlayerControl : MonoBehaviourPun
             {
                 photonView.RPC("RPC_TakeDamage", RpcTarget.All);
             }
-            
+
         }
         //TakeInput();
 
