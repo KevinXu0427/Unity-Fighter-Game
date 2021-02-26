@@ -1489,6 +1489,36 @@ Transform:
   m_Father: {fileID: 4615066485353958989}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6199560708319858304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4993142929063710850}
+  m_Layer: 0
+  m_Name: Energy ball Spawner
+  m_TagString: Local
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4993142929063710850
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6199560708319858304}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.42, y: 1.09, z: 0.28}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6649719474534848700}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6269956320440730118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,6 +1534,7 @@ GameObject:
   - component: {fileID: 4782858003393084462}
   - component: {fileID: 1749218422550018518}
   - component: {fileID: 8469836277420909611}
+  - component: {fileID: 6156639422230414477}
   m_Layer: 0
   m_Name: KaChu L
   m_TagString: Local
@@ -1525,6 +1556,7 @@ Transform:
   - {fileID: 7730146409893209700}
   - {fileID: 1159921467612985384}
   - {fileID: 8076418356047709345}
+  - {fileID: 4993142929063710850}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -60, z: 0}
@@ -1663,6 +1695,20 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &6156639422230414477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6269956320440730118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77203a7d70c4d5943aa5e1dd3353e6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 7001060495366646277, guid: 225e04548c0a513459f654f748f4b571, type: 3}
+  Spwaner: {fileID: 6199560708319858304}
 --- !u!1 &6475357847428381969
 GameObject:
   m_ObjectHideFlags: 0

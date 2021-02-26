@@ -15,9 +15,26 @@ public class ProjectileController : MonoBehaviour
 
     public IEnumerator ShootEnergyBall()
     {
-        GameObject energyBall = Instantiate(projectile, Spwaner.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(0.5f);
-        energyBall.GetComponentInParent<Rigidbody>().velocity = energyBall.transform.right * moveSpeed;
-        Destroy(energyBall, 3f);
+       
+        if (Spwaner.tag == "Master")
+        {
+            GameObject energyBall = Instantiate(projectile, Spwaner.transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(0.5f);
+
+            energyBall.GetComponentInParent<Rigidbody>().velocity = energyBall.transform.right * moveSpeed;
+            Destroy(energyBall, 3f);
+
+        }
+        else
+        {
+            GameObject energyBall = Instantiate(projectile, Spwaner.transform.position, Quaternion.identity);
+            energyBall.transform.Rotate(0.0f, 180.0f, 0.0f);
+
+            yield return new WaitForSeconds(0.7f);
+
+            energyBall.GetComponentInParent<Rigidbody>().velocity = energyBall.transform.right * moveSpeed;
+            Destroy(energyBall, 3f);
+
+        }
     }
 }

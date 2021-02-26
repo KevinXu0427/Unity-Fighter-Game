@@ -34,10 +34,11 @@ public class PlayerControl : MonoBehaviourPun
 
             if (Input.GetKeyDown(KeyCode.B))
             {
-                photonView.RPC("RPC_TakeDamage", RpcTarget.All);
+                TakeDamage();
             }
 
         }
+
         //TakeInput();
 
     }
@@ -133,7 +134,7 @@ public class PlayerControl : MonoBehaviourPun
         // Kicking
         if (Input.GetKeyDown(KeyCode.K))
         {
-            anim.SetTrigger("Kick"); ;
+            anim.SetTrigger("Kick");
         }
 
         // Energy Ball Attack
@@ -142,6 +143,11 @@ public class PlayerControl : MonoBehaviourPun
             anim.SetTrigger("Energy Ball Attack");
             StartCoroutine(energyBall.ShootEnergyBall());
         }
+    }
+
+    public void TakeDamage()
+    {
+        photonView.RPC("RPC_TakeDamage", RpcTarget.All);
     }
 
     [PunRPC]
