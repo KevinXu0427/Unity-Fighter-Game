@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Local
   - Master
+  - EnergyBall
   layers:
   - Default
   - TransparentFX

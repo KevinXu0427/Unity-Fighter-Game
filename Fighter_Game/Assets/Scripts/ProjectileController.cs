@@ -19,6 +19,7 @@ public class ProjectileController : MonoBehaviour
         if (Spwaner.tag == "Master")
         {
             GameObject energyBall = Instantiate(projectile, Spwaner.transform.position, Quaternion.identity);
+            energyBall.tag = "Master";
             yield return new WaitForSeconds(0.5f);
 
             energyBall.GetComponentInParent<Rigidbody>().velocity = energyBall.transform.right * moveSpeed;
@@ -29,7 +30,7 @@ public class ProjectileController : MonoBehaviour
         {
             GameObject energyBall = Instantiate(projectile, Spwaner.transform.position, Quaternion.identity);
             energyBall.transform.Rotate(0.0f, 180.0f, 0.0f);
-
+            energyBall.tag = "Local";
             yield return new WaitForSeconds(0.7f);
 
             energyBall.GetComponentInParent<Rigidbody>().velocity = energyBall.transform.right * moveSpeed;

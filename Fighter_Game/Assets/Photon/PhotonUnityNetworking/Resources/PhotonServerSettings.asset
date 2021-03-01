@@ -42,6 +42,7 @@ MonoBehaviour:
   - LoadGameScene
   - RPC_TakeDamage
   - RPC_Instantiate
+  - RPC_PlayerAttackCheck
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

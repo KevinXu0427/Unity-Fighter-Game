@@ -6,16 +6,20 @@ using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviourPun
 {
+    public int comboNum;
+    public float reset;
+    public float resetTime;
+    public bool isAttacking;
+    public bool localPlayerAttack;
+
+
     private Animator anim;
-    private float movementSpeed = 1.0f;
-
-    private List<string> animlist = new List<string>(new string[] { "Punch1", "Punch2", "Punch3" });
-    public int comboNum = 0;
-    public float reset= 0f;
-    public float resetTime= 0f;
-
+    private float movementSpeed;
     private ProjectileController energyBall;
     private Health hp;
+
+    private List<string> animlist = new List<string>(new string[] { "Punch1", "Punch2", "Punch3" });
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +27,17 @@ public class PlayerControl : MonoBehaviourPun
         anim = GetComponent<Animator>();
         energyBall = GetComponent<ProjectileController>();
         hp = GetComponent<Health>();
+        isAttacking = false;
+        comboNum = 0;
+        reset = 0f;
+        resetTime = 0f;
+        movementSpeed = 1.0f;
+        localPlayerAttack = false;
+
     }
 
-    // Update is called once per frame
-    void Update()
+// Update is called once per frame
+void Update()
     {
         if (photonView.IsMine)
         {
@@ -135,6 +146,7 @@ public class PlayerControl : MonoBehaviourPun
         if (Input.GetKeyDown(KeyCode.K))
         {
             anim.SetTrigger("Kick");
+            isAttacking = true;
         }
 
         // Energy Ball Attack
@@ -143,17 +155,32 @@ public class PlayerControl : MonoBehaviourPun
             anim.SetTrigger("Energy Ball Attack");
             StartCoroutine(energyBall.ShootEnergyBall());
         }
-    }
 
+    }
+    
+    public bool GetIsAttacking()
+    {
+        return isAttacking;
+    }
+    public void SetIsAttacking(bool val)
+    {
+        isAttacking = val;
+    }
+    
     public void TakeDamage()
     {
         photonView.RPC("RPC_TakeDamage", RpcTarget.All);
     }
-
+   
     [PunRPC]
     void RPC_TakeDamage()
     {
         hp.TakeDamage(10);
     }
 
+    [PunRPC]
+    void RPC_PlayerAttackCheck(bool value)
+    {
+        localPlayerAttack = value;
+    }
 }
