@@ -39,49 +39,68 @@ public class PlayerControl : MonoBehaviourPun
 // Update is called once per frame
 void Update()
     {
-        if (photonView.IsMine)
-        {
-            TakeInput();
+        //if (photonView.IsMine)
+        //{
+        //    TakeInput();
 
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                TakeDamage();
-            }
+        //    if (Input.GetKeyDown(KeyCode.B))
+        //    {
+        //        TakeDamage();
+        //    }
 
-        }
+        //}
 
-        //TakeInput();
+        TakeInput();
 
     }
 
     void TakeInput()
     {
-        if (Input.GetKeyDown(KeyCode.J) && comboNum < 3)
-        {
-            anim.SetTrigger(animlist[comboNum]);
-            comboNum++;
-            reset = 0f;
-        }
-        if (comboNum > 0)
-        {
-            reset += Time.deltaTime;
-            if (reset > resetTime)
-            {
-                anim.SetTrigger("Reset");
-                comboNum = 0;
-            }
-            if (comboNum == 3)
-            {
-                resetTime = 1f;
-                comboNum = 0;
-            }
-            else
-            {
-                resetTime = 0.8f;
-            }
+        //// Combo attack
+        //if (Input.GetKeyDown(KeyCode.J) && comboNum < 3)
+        //{
+        //    anim.SetTrigger(animlist[comboNum]);
+        //    comboNum++;
+        //    reset = 0f;
+        //    isAttacking = true;
+        //}
+        //if (comboNum > 0)
+        //{
+        //    reset += Time.deltaTime;
+        //    if (reset > resetTime)
+        //    {
+        //        anim.SetTrigger("Reset");
+        //        comboNum = 0;
+        //    }
+        //    if (comboNum == 3)
+        //    {
+        //        resetTime = 1f;
+        //        comboNum = 0;
+        //    }
+        //    else
+        //    {
+        //        resetTime = 0.8f;
+        //    }
 
+        //}
+
+        // Kicking
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            anim.SetTrigger("Punch1");
+            isAttacking = true;
         }
-        
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            anim.SetTrigger("Punch2");
+            isAttacking = true;
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            anim.SetTrigger("Punch3");
+            isAttacking = true;
+        }
+
         // Move Left/Right
         Vector3 moveDir = Vector3.zero;
         moveDir.x = Input.GetAxis("Horizontal");
