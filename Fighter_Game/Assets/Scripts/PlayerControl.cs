@@ -31,7 +31,7 @@ public class PlayerControl : MonoBehaviourPun
         comboNum = 0;
         reset = 0f;
         resetTime = 0f;
-        movementSpeed = 1.0f;
+        movementSpeed = 1.5f;
         localPlayerAttack = false;
 
     }
@@ -39,18 +39,18 @@ public class PlayerControl : MonoBehaviourPun
 // Update is called once per frame
 void Update()
     {
-        //if (photonView.IsMine)
-        //{
-        //    TakeInput();
+        if (photonView.IsMine)
+        {
+            TakeInput();
 
-        //    if (Input.GetKeyDown(KeyCode.B))
-        //    {
-        //        TakeDamage();
-        //    }
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                TakeDamage();
+            }
 
-        //}
+        }
 
-        TakeInput();
+        //TakeInput();
 
     }
 
@@ -194,7 +194,7 @@ void Update()
     [PunRPC]
     void RPC_TakeDamage()
     {
-        hp.TakeDamage(10);
+        hp.TakeDamage(Random.Range(5,15));
     }
 
     [PunRPC]

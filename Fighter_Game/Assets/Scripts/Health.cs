@@ -6,11 +6,15 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviourPunCallbacks,IPunObservable
 {
-    private int maxHealth = 100;
-    [SerializeField] private int mCurrentHealth = 0;
-    public int CurrentHealth { get { return mCurrentHealth; } }
+    [SerializeField] private float mCurrentHealth = 0.0f;
+    public float CurrentHealth { get { return mCurrentHealth; } }
+    
+    private float lerpTimer;
+    private float maxHealth = 100.0f;
+    private float chipSpeed = 2.0f;
+    public Image frontHealthBar;
+    public Image backHealthBar;
 
-    public Text healthText;
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -21,7 +25,7 @@ public class Health : MonoBehaviourPunCallbacks,IPunObservable
         }
         else
         {
-            mCurrentHealth = (int)stream.ReceiveNext();
+            mCurrentHealth = (float)stream.ReceiveNext();
         }
     }
 
@@ -32,7 +36,28 @@ public class Health : MonoBehaviourPunCallbacks,IPunObservable
 
     private void Update()
     {
-        healthText.text = mCurrentHealth.ToString();
+        mCurrentHealth = Mathf.Clamp(mCurrentHealth, 0, maxHealth);
+        UpdateHealthUI();
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TakeDamage(Random.Range(5, 10));
+        }
+    }
+
+    public void UpdateHealthUI()
+    {
+        //Debug.Log(mCurrentHealth);
+        float fillF = frontHealthBar.fillAmount;
+        float fillB = backHealthBar.fillAmount;
+        float hFraction = mCurrentHealth / maxHealth;
+        if (fillB > hFraction)
+        {
+            frontHealthBar.fillAmount = hFraction;
+            backHealthBar.color = Color.red;
+            lerpTimer += Time.deltaTime;
+            float percentCompete = lerpTimer / chipSpeed;
+            backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentCompete);
+        }
     }
 
     public void SetMaxHealth(int maxHp)
@@ -44,6 +69,7 @@ public class Health : MonoBehaviourPunCallbacks,IPunObservable
     public void TakeDamage(int damage)
     {
         mCurrentHealth -= damage;
+        lerpTimer = 0f;
 
     }
 }
