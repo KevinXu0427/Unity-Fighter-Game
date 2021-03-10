@@ -887,8 +887,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterPrefabs:
   - {fileID: 134532151261398858, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
-  - {fileID: 6269956320440730118, guid: 65bf705b2d053b9478363a5d366e6a3b, type: 3}
-  - {fileID: 134532151261398858, guid: fa82e3de9081be74ba7834c6639ac4aa, type: 3}
+  - {fileID: 134532151261398858, guid: 450312f7d6b2b8a4391851060ee7b8f0, type: 3}
+  - {fileID: 6269956320440730118, guid: d73dbf1814abf0b4ab3561430a7c319a, type: 3}
   - {fileID: 6269956320440730118, guid: d73dbf1814abf0b4ab3561430a7c319a, type: 3}
   spawnPoints:
   - {fileID: 2582399920878053898}
