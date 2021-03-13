@@ -17,6 +17,7 @@ public class PlayerControl : MonoBehaviourPun
     private float movementSpeed;
     private ProjectileController energyBall;
     private Health hp;
+    private HitEffect hitEffect;
 
     private List<string> animlist = new List<string>(new string[] { "Punch1", "Punch2", "Punch3" });
 
@@ -27,6 +28,7 @@ public class PlayerControl : MonoBehaviourPun
         anim = GetComponent<Animator>();
         energyBall = GetComponent<ProjectileController>();
         hp = GetComponent<Health>();
+        hitEffect = GetComponent<HitEffect>();
         isAttacking = false;
         comboNum = 0;
         reset = 0f;
@@ -39,6 +41,15 @@ public class PlayerControl : MonoBehaviourPun
 // Update is called once per frame
 void Update()
     {
+        if (gameObject.tag == "Master")
+        {
+            Camera.main.GetComponent<CameraControl>().SetPlayerAPos(transform);
+        }
+        else
+        {
+            Camera.main.GetComponent<CameraControl>().SetPlayerBPos(transform);
+        }
+
         if (photonView.IsMine)
         {
             TakeInput();
@@ -108,7 +119,6 @@ void Update()
         if (gameObject.tag == "Master")
         {
             transform.rotation = Quaternion.Euler(0, 130, 0);
-            
             // Right
             if (Input.GetAxis("Horizontal") > 0)
             {
@@ -172,9 +182,15 @@ void Update()
         if (Input.GetKeyDown(KeyCode.U))
         {
             anim.SetTrigger("Energy Ball Attack");
-            StartCoroutine(energyBall.ShootEnergyBall());
+            photonView.RPC("RPC_Shootball", RpcTarget.All);
+
         }
 
+    }
+
+    public void SetMoveSpeed(float val)
+    {
+        movementSpeed = val;
     }
     
     public bool GetIsAttacking()
@@ -194,7 +210,15 @@ void Update()
     [PunRPC]
     void RPC_TakeDamage()
     {
+        hitEffect.PlayHitEffect();
+
         hp.TakeDamage(Random.Range(5,15));
+    }
+
+    [PunRPC]
+    void RPC_Shootball()
+    {
+        StartCoroutine(energyBall.ShootEnergyBall());
     }
 
     [PunRPC]

@@ -7,6 +7,8 @@ TagManager:
   - Local
   - Master
   - EnergyBall
+  - body
+  - wall
   layers:
   - Default
   - TransparentFX

@@ -21,14 +21,15 @@ public class Movement : MonoBehaviourPun
 
     void Update()
     {
-        if (photonView.IsMine)
-        {
-            TakeInput();
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                photonView.RPC("RPC_TakeDamage", RpcTarget.All);
-            }
-        }
+        //if (photonView.IsMine)
+        //{
+        //    TakeInput();
+        //    if (Input.GetKeyDown(KeyCode.B))
+        //    {
+        //        photonView.RPC("RPC_TakeDamage", RpcTarget.All);
+        //    }
+        //}
+        TakeInput();
 
     }
 
